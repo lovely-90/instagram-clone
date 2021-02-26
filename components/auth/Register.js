@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, TextInput, Button } from 'react-native';
+import firebase from 'firebase';
 
 export class Register extends Component {
 
@@ -15,7 +16,14 @@ export class Register extends Component {
     }
 
     onSignUp = () => {
-
+        const { email, password, name } = this.state;
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((result) => {
+                console.log(result);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     render() {
@@ -35,7 +43,7 @@ export class Register extends Component {
                 />
                 <Button 
                     title="Sign Up"
-                    onPress={() => this.onSignUp}
+                    onPress={() => this.onSignUp()}
                 />
             </View>
         )
