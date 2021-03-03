@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import LandingScreeen from "./components/auth/Landing";
 import RegisterScreen from "./components/auth/Register";
 import LoginScreen from "./components/auth/Login";
+import Main from "./components/Main";
 
 import * as firebase from 'firebase';
-import { API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID, MEASUREMENT_ID } from "@env"
+import { API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID, MEASUREMENT_ID } from "@env";
+
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import rootReducer from './redux/reducers';
+import thunk from 'redux-thunk';
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
 var firebaseConfig = {
   apiKey: API_KEY,
   authDomain: AUTH_DOMAIN,
@@ -70,9 +80,9 @@ export class App extends Component {
       );
     }
     return(
-      <View style={{flex: 1, justifyContent: 'center'}}>
-        <Text>User is already logged in</Text>
-      </View>
+      <Provider store={store}>
+        <Main />
+      </Provider>
     );
   }
 }
