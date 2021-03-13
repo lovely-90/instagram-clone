@@ -7,7 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LandingScreeen from "./components/auth/Landing";
 import RegisterScreen from "./components/auth/Register";
 import LoginScreen from "./components/auth/Login";
-import Main from "./components/Main";
+import MainScreen from "./components/Main";
 
 import * as firebase from 'firebase';
 import { API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID, MEASUREMENT_ID } from "@env";
@@ -81,7 +81,11 @@ export class App extends Component {
     }
     return(
       <Provider store={store}>
-        <Main />
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Main">
+            <Stack.Screen name="Main" component={MainScreeen} options={{ headerShown: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </Provider>
     );
   }
